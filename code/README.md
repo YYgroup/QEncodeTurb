@@ -2,7 +2,7 @@
 
 ## Files
 
-- `GeoEncodeTurb_main.ipynb` is the only notebook and contains concise workflow calls.
+- `GeoEncodeTurb_main.ipynb` is the main notebook and contains concise workflow calls.
 - `geoencode_turb/config.py` stores the shared workflow parameters.
 - `geoencode_turb/quantum_encoding.py` contains target-distribution generation, Gray-code mapping, conditional-angle fitting, circuit construction, and statevector simulation.
 - `geoencode_turb/flow_reconstruction.py` reconstructs the Pauli-spinor and primary fluid fields.
