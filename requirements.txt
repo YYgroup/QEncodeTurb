@@ -1,0 +1,8 @@
+numpy
+scipy
+pandas
+matplotlib
+qiskit
+qiskit-aer
+pyvista
+jupyter
