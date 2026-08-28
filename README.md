@@ -1,4 +1,4 @@
-This repository contains the source code for the arXiv paper: “Geometric quantum encoding of a turbulent field” (arXiv:2508.05346).
+This repository contains the source code for the arXiv paper: “Geometric encoding of turbulence for end-to-end quantum simulation” (arXiv:2508.05346).
 
 ## Files
 
