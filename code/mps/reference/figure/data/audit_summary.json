@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "independent_audit": {
+    "checked_fields": 15,
+    "checked_spectra": 90,
+    "checked_saved_mps": 45,
+    "maximum_relative_spectrum_difference": 9.59786644920647e-14,
+    "maximum_entropy_difference_bits": 5.595524044110789e-14,
+    "maximum_reconstruction_error_difference": 3.469446951953614e-17
+  },
+  "fresh_generation": {
+    "15": {
+      "n": 15,
+      "relative_errors": {
+        "ux": 0.0,
+        "uy": 0.0,
+        "uz": 0.0
+      },
+      "passed": true
+    },
+    "27": {
+      "n": 27,
+      "relative_errors": {
+        "ux": 0.0,
+        "uy": 0.0,
+        "uz": 0.0
+      },
+      "passed": true
+    }
+  },
+  "original_matlab": {
+    "passed": true,
+    "maximum_relative_spectrum_difference": 3.6620365687925234e-15,
+    "maximum_joint_cut_ranks": [
+      475.0,
+      504.0,
+      511.0
+    ],
+    "desired_relative_errors": [
+      0.01,
+      0.001,
+      0.0001
+    ]
+  }
+}

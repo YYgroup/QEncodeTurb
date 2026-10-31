@@ -1,0 +1,16 @@
+{
+  "data/audit_summary.json": "1f66891e43595011327375544ec84edcd9ccb8ea5fffcbf681b3587f748b64d6",
+  "data/circuit_n30_compilation.json": "f56e1f5a7357fd393dfd896cc37779470fee2fda5807ed1cc0fe36ad2a7b7e69",
+  "data/circuit_resources.csv": "f7af169bac84dda7a37c2afb8210b25f33a6d4bac6834fa19f0156e7f92d30a8",
+  "data/field_settings.json": "4d3c2fb487aa90ea8bb05a84d02d0a8d733c7704a6518bc35e7d0ea71fc7ebaa",
+  "data/mps_components.csv": "96963dee585f17538664a3de19b224d54bab9b56682152f37647f7e65e38d922",
+  "data/mps_summary.csv": "97c45fa4cfd98bc92ffa177cc8c783ed4c6db7d6051c125627be6593be7aa836",
+  "data/provenance.json": "c5290be7eb575ce291c36a276031a5b80eff28639550b21116a2530818ec9331",
+  "data/README.md": "a559473175a82f88b491f9d06d8f764e97a52bfe24b5a62717129523f5eafb1e",
+  "data/schmidt_metadata.csv": "5f23b4c6c2c845f8017938b6db643d303304e0cdad83e0091bc9bff05ca9651e",
+  "data/schmidt_spectra.npz": "f3e37abfac0ba36afa59eab6fb376f4522447d756a4036ea0d4cafdfab862a1f",
+  "data/unavoidable_error_curves.csv": "f399b08f7fa486f762996c7adfb352a22ccc3b3f6d6a649cdeb1cd07c9822bfb",
+  "data/upper_bounds_and_error_conventions.csv": "9d48c08e4513c85c813438bb74972f8bbb4b5ec2c22609910b4a71b907f28b76",
+  "data/velocity_metadata.csv": "b8c1d4dcca265657fd92b4cd9e761f1e7aa156d8cc49e2ac6461f256d0ae9b9e",
+  "data/velocity_slices.npz": "957e74c1e7a23871301f500c27fde364fa0feb872362738a1c6eb50a3f3cdff6"
+}

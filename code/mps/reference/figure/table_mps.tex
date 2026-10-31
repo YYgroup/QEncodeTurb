@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering
+\caption{Resources of the velocity MPS at a componentwise relative $L^2$ error tolerance $\epsilon=10^{-2}$.
+The spatial register contains $n$ qubits and represents an $N^3$ grid.
+The octal scale encoding has $L=\log_2N$ sites and the rank bound $\chi_{\max}=8^{\lfloor L/2\rfloor}$.
+The necessary bound $\chi_{\mathrm{lb}}$ follows from the Schmidt spectra, whereas $\chi_{\mathrm{built}}$ is attained by an explicitly constructed MPS with verified reconstruction error.
+Both ranks are maxima over all cuts and velocity components.
+$P_{\mathrm{NVPS}}$ excludes internal gauge freedom.
+Parameter counts and storage sum the three velocity components.
+Storage uses double precision, with $1\,\mathrm{MiB}=2^{20}$ bytes.
+Each row represents one realization with the manuscript parameters.}
+\label{tab:velocity_mps_resources}
+\begin{tabular}{rrrrrrr}
+\hline\hline
+$n$ & $N$ & $\chi_{\max}$ & $\chi_{\mathrm{lb}}$ & $\chi_{\mathrm{built}}$ & $P_{\mathrm{NVPS}}/(3N^3)$ & Storage (MiB) \\
+\hline
+15 & 32 & 64 & 64 & 64 & 1.0000 & 0.94 \\
+18 & 64 & 512 & 475 & 475 & 0.9947 & 11.32 \\
+21 & 128 & 512 & 512 & 512 & 1.0000 & 60.19 \\
+24 & 256 & 4096 & 3427 & 3427 & 0.9730 & 654.07 \\
+27 & 512 & 4096 & 3994 & 4027 & 0.9703 & 3734.96 \\
+\hline\hline
+\end{tabular}
+\end{table*}

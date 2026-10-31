@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Resources of the generating spinor circuits.
+The qubit count gives the spatial register size of each component circuit.
+The parameter count includes shared amplitude angles, independent phase angles for both spinor components, and one population fraction.
+Gate counts are summed over the two circuits, and the reported depth is their maximum.
+Transpilation uses the $\{U,\mathrm{CX}\}$ basis at optimization level 3 without a hardware coupling constraint.
+These counts cover spinor preparation before Gray decoding and Fourier transforms.
+They exclude velocity evaluation, measurement, and time evolution.}
+\label{tab:spinor_circuit_resources}
+\begin{tabular}{rrrrr}
+\hline\hline
+Qubits & Parameters & \shortstack{CX\\gates} & \shortstack{$U$\\gates} & \shortstack{Max.\\depth} \\
+\hline
+15 & 295 & 572 & 400 & 174 \\
+18 & 405 & 784 & 522 & 207 \\
+21 & 520 & 992 & 622 & 223 \\
+24 & 655 & 1244 & 748 & 229 \\
+27 & 808 & 1532 & 896 & 176 \\
+30 & 982 & 1868 & 1070 & 194 \\
+\hline\hline
+\end{tabular}
+\end{table}
