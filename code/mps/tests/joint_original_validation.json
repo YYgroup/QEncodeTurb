@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "maximum_relative_spectrum_difference": 2.631187687802604e-15,
+  "maximum_joint_cut_ranks": [
+    475,
+    504,
+    511
+  ],
+  "desired_relative_errors": [
+    0.01,
+    0.001,
+    0.0001
+  ]
+}

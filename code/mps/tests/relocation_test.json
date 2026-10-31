@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "extracted_from_zip": true,
+  "beside_main_notebook": true,
+  "path_contains_spaces_and_chinese": true,
+  "entry_notebook_code_cells_executed": 2,
+  "notebook_mode": "check",
+  "fresh_n_values": [
+    15,
+    18
+  ],
+  "fresh_mps_approximations": 18,
+  "fresh_circuit_only_n": 30,
+  "reference_comparison_passed": true,
+  "plot_only_mode_passed": true,
+  "plot_tex_mode": "required",
+  "six_panel_width_cm": 17.9,
+  "saved_entry_notebook_does_not_break_integrity": true,
+  "no_original_workspace_paths_required": true
+}

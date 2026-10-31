@@ -1,0 +1,32 @@
+[
+  {
+    "n": 15,
+    "component": "ux",
+    "byte_identical_velocity": true
+  },
+  {
+    "n": 15,
+    "component": "uy",
+    "byte_identical_velocity": true
+  },
+  {
+    "n": 15,
+    "component": "uz",
+    "byte_identical_velocity": true
+  },
+  {
+    "n": 18,
+    "component": "ux",
+    "byte_identical_velocity": true
+  },
+  {
+    "n": 18,
+    "component": "uy",
+    "byte_identical_velocity": true
+  },
+  {
+    "n": 18,
+    "component": "uz",
+    "byte_identical_velocity": true
+  }
+]

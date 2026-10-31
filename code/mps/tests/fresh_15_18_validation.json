@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "completed_components": 6,
+  "completed_approximations": 18,
+  "independent_audit": {
+    "checked_fields": 6,
+    "checked_spectra": 27,
+    "checked_saved_mps": 18,
+    "maximum_relative_spectrum_difference": 1.1783965792349223e-15,
+    "maximum_entropy_difference_bits": 4.440892098500626e-15,
+    "maximum_reconstruction_error_difference": 1.734723475976807e-18
+  }
+}

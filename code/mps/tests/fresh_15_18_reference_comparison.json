@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "n_values": [
+    15,
+    18
+  ],
+  "checked_summary_rows": 6,
+  "checked_circuit_rows": 3,
+  "tolerance_for_reconstruction_error_difference": 1e-08,
+  "timing_and_memory_not_required_to_match": true,
+  "checks": [
+    {
+      "n": 15,
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "epsilon": 0.0001,
+      "passed": true
+    }
+  ]
+}
