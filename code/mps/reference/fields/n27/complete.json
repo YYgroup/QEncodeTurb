@@ -1,0 +1,137 @@
+{
+  "n_spatial_qubits": 27,
+  "grid": 512,
+  "realization": 1,
+  "config": {
+    "nx": 9,
+    "ny": 9,
+    "nz": 9,
+    "k_cutoff": 15.0,
+    "component_ratio": 0.006,
+    "seed_spin_up": 2025,
+    "seed_spin_down": 2026,
+    "max_parallel_threads": 16,
+    "velocity_method": "FDM",
+    "derivative_method": "FDM",
+    "fontsize": 8.0,
+    "data_dir": "C:\\codex\\v1.0\\data\\mps_velocity_20261029\\fields\\n27\\compiler",
+    "figure_dir": "C:\\codex\\v1.0\\data\\mps_velocity_20261029\\fields\\n27\\figures"
+  },
+  "tail_tolerance": 1e-12,
+  "locality_radius": 3,
+  "velocity_definition": "Unmodified reconstruct_flow_field and compute_velocity(FDM)",
+  "axis_order": "Existing flow.ux/uy/uz array axes, preserved without changes",
+  "encoding_seconds": 18.7243314999796,
+  "reconstruction_seconds": 48.12574030001997,
+  "export_total_seconds": 78.89907869999297,
+  "export_baseline_rss_bytes": 125505536,
+  "export_peak_rss_bytes": 27951894528,
+  "compiler": {
+    "compiler": "sparse",
+    "n_total": 27,
+    "dense_probability_values": 134217728,
+    "significant_modes": 30047,
+    "occupied_prefix_nodes": 74144,
+    "fitted_prefix_nodes": 44097,
+    "tail_probability": 6.72805814476104e-13,
+    "cutoff_wavenumber": 19.261360284258224,
+    "locality_radius": 3,
+    "compile_time_s": 0.6909951000125147,
+    "baseline_rss_bytes": 0,
+    "peak_rss_bytes": 0,
+    "incremental_peak_memory_bytes": 0,
+    "retained_data_bytes": 2734277
+  },
+  "circuits": [
+    {
+      "seed": 2025,
+      "logical_operations": {
+        "cx": 702,
+        "rz": 378,
+        "cry": 33,
+        "ry": 27
+      },
+      "logical_depth": 162,
+      "basis_operations": {
+        "cx": 766,
+        "u": 448
+      },
+      "basis_depth": 176
+    },
+    {
+      "seed": 2026,
+      "logical_operations": {
+        "cx": 702,
+        "rz": 378,
+        "cry": 33,
+        "ry": 27
+      },
+      "logical_depth": 162,
+      "basis_operations": {
+        "cx": 766,
+        "u": 448
+      },
+      "basis_depth": 176
+    }
+  ],
+  "active_amplitude_parameters": 51,
+  "fitted_amplitude_slots": 378,
+  "phase_parameters_per_spin_component": 378,
+  "total_generative_scalar_parameters": 808,
+  "generative_parameter_definition": "Shared active amplitude angles + independent one-body and pairwise phase angles for both spin components + population ratio; counts arbitrary angles rather than RNG seeds. This circuit prepares a spinor, not velocity amplitudes. Classical decoding is required to obtain explicit velocity fields.",
+  "fields": {
+    "ux": {
+      "shape": [
+        512,
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "norm": 95867.79563945836,
+      "mean": -0.18526291161990147,
+      "minimum": -1476.6459248084263,
+      "maximum": 1094.6949156799917,
+      "bytes": 1073741824,
+      "sha256": "1073c1eaee34e94c34d23fa13ab133b0ded2c30cf95ee0c33241992a057b125c"
+    },
+    "uy": {
+      "shape": [
+        512,
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "norm": 98979.83045288028,
+      "mean": 0.0762700338839967,
+      "minimum": -1377.2069905334356,
+      "maximum": 1552.4406008834812,
+      "bytes": 1073741824,
+      "sha256": "8016f3a4ce0233586c3b9bcfe70dcc2763c7243f1d5ff8e5c8927f026c670a89"
+    },
+    "uz": {
+      "shape": [
+        512,
+        512,
+        512
+      ],
+      "dtype": "float64",
+      "norm": 102895.23812988294,
+      "mean": 0.22731990950100942,
+      "minimum": -1154.9924769761208,
+      "maximum": 1996.2639490194888,
+      "bytes": 1073741824,
+      "sha256": "893f65be2ef34e8264fb2ffda10678379ef978f2ac03c0fc4998d6531fb1c865"
+    }
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0",
+    "qiskit": "2.1.1"
+  },
+  "scientific_source_sha256": {
+    "geoencode_turb\\config.py": "973abd7fe49b3d3da1dc7dbeff607c1276730817dc8362a084b3128f2a9f5879",
+    "geoencode_turb\\quantum_encoding.py": "cbfc4bd75193cbb0c471ca2e6c656b62bedb4a1e7d72308583ec3851b6de23dd",
+    "geoencode_turb\\flow_reconstruction.py": "003d1f36a2eb309e218028ef13cc0d4e6667216cc55f309cce9a73d64f613610"
+  }
+}
