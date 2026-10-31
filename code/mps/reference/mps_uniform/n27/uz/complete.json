@@ -1,0 +1,270 @@
+{
+  "n": 27,
+  "grid": 512,
+  "component": "uz",
+  "local_dimension": 8,
+  "sites": 9,
+  "encoding": "Gourianov 2022 octal scale order, coarse to fine, omega=x_bit+2*y_bit+4*z_bit",
+  "adapter_sha256": "24790c20c76e028bddd9f156b07086caccb143d8767794e18d6170b8c97c7dd0",
+  "input_sha256": "893f65be2ef34e8264fb2ffda10678379ef978f2ac03c0fc4998d6531fb1c865",
+  "spectrum_seconds": 50.43153830000665,
+  "spectrum_time_note": "null denotes reused survey spectra",
+  "norm_squared": 10587430029.805304,
+  "spectra": [
+    {
+      "cut": 1,
+      "entropy_bits": 2.998909707344148,
+      "norm_squared_from_spectrum": 10587430029.805103,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 1.887379141862766e-14,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    },
+    {
+      "cut": 2,
+      "entropy_bits": 5.9805619344662055,
+      "norm_squared_from_spectrum": 10587430029.805326,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 2.220446049250313e-15,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 3,
+      "entropy_bits": 8.452138839813713,
+      "norm_squared_from_spectrum": 10587430029.805336,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 3.1086244689504383e-15,
+      "ranks_by_epsilon": {
+        "0.01": 512,
+        "0.001": 512,
+        "0.0001": 512
+      }
+    },
+    {
+      "cut": 4,
+      "entropy_bits": 8.39572456617311,
+      "norm_squared_from_spectrum": 10587430029.805332,
+      "method": "LAPACK eigvalsh of smaller Gram matrix",
+      "relative_norm_squared_residual": 2.6645352591003757e-15,
+      "ranks_by_epsilon": {
+        "0.01": 3979,
+        "0.001": 4087,
+        "0.0001": 4096
+      }
+    },
+    {
+      "cut": 5,
+      "entropy_bits": 6.3515295633637665,
+      "norm_squared_from_spectrum": 10587430029.805328,
+      "method": "LAPACK eigvalsh of smaller Gram matrix",
+      "relative_norm_squared_residual": 2.4424906541753444e-15,
+      "ranks_by_epsilon": {
+        "0.01": 3994,
+        "0.001": 4095,
+        "0.0001": 4096
+      }
+    },
+    {
+      "cut": 6,
+      "entropy_bits": 4.118855730033656,
+      "norm_squared_from_spectrum": 10587430029.805323,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 1.7763568394002505e-15,
+      "ranks_by_epsilon": {
+        "0.01": 510,
+        "0.001": 512,
+        "0.0001": 512
+      }
+    },
+    {
+      "cut": 7,
+      "entropy_bits": 2.2988957466940465,
+      "norm_squared_from_spectrum": 10587430029.805357,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 5.10702591327572e-15,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 8,
+      "entropy_bits": 0.9649942207789917,
+      "norm_squared_from_spectrum": 10587430029.805414,
+      "method": "LAPACK singular values",
+      "relative_norm_squared_residual": 1.0436096431476471e-14,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    }
+  ],
+  "approximations": [
+    {
+      "uniform_cap": 4027,
+      "schmidt_tail_sufficient_error_bound": 0.00990128315373162,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        375440.04011811124,
+        662056.2172111522,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.00989915199847221,
+      "ranks": [
+        8,
+        64,
+        512,
+        4027,
+        4027,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 163255624,
+      "gauge_reduced_real_parameters": 130289558,
+      "epsilon": 0.01,
+      "actual_relative_l2_error": 0.009899151998472211,
+      "chi_max": 4027,
+      "chi_schmidt_lower_bound": 3994,
+      "chi_excess_over_lower_bound": 33,
+      "dense_real_parameters": 134217728,
+      "stored_parameter_ratio_to_dense": 1.216349184513092,
+      "gauge_reduced_parameter_ratio_to_dense": 0.9707328528165817,
+      "mps_core_bytes": 1306044992,
+      "construction_seconds": 166.46896459997515,
+      "reconstruction_seconds": 8.105519700009609,
+      "save_seconds": 2.2153811999887694,
+      "construction_baseline_rss_bytes": 1351409664,
+      "construction_peak_rss_bytes": 5981077504,
+      "construction_incremental_peak_rss_bytes": 4629667840,
+      "file": "mps_eps_1e-02.npz"
+    },
+    {
+      "uniform_cap": 4095,
+      "schmidt_tail_sufficient_error_bound": 0.0008543708052043051,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        377.43631733316147,
+        7350.843682961855,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0008543703094867386,
+      "ranks": [
+        8,
+        64,
+        512,
+        4095,
+        4095,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 168231048,
+      "gauge_reduced_real_parameters": 134160390,
+      "epsilon": 0.001,
+      "actual_relative_l2_error": 0.0008543703094867376,
+      "chi_max": 4095,
+      "chi_schmidt_lower_bound": 4095,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 134217728,
+      "stored_parameter_ratio_to_dense": 1.2534189820289612,
+      "gauge_reduced_parameter_ratio_to_dense": 0.9995727986097336,
+      "mps_core_bytes": 1345848384,
+      "construction_seconds": 126.26392549998127,
+      "reconstruction_seconds": 6.660756500001298,
+      "save_seconds": 1.577855899988208,
+      "construction_baseline_rss_bytes": 2004123648,
+      "construction_peak_rss_bytes": 6515822592,
+      "construction_incremental_peak_rss_bytes": 4511698944,
+      "file": "mps_eps_1e-03.npz"
+    },
+    {
+      "uniform_cap": 4096,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        512,
+        4096,
+        4096,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 168304768,
+      "gauge_reduced_real_parameters": 134217728,
+      "epsilon": 0.0001,
+      "actual_relative_l2_error": 1.1520170744145953e-14,
+      "chi_max": 4096,
+      "chi_schmidt_lower_bound": 4096,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 134217728,
+      "stored_parameter_ratio_to_dense": 1.2539682388305664,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 1346438144,
+      "construction_seconds": 114.92049879999831,
+      "reconstruction_seconds": 8.09857779997401,
+      "save_seconds": 3.0786083999846596,
+      "construction_baseline_rss_bytes": 2317185024,
+      "construction_peak_rss_bytes": 6792359936,
+      "construction_incremental_peak_rss_bytes": 4475174912,
+      "file": "mps_eps_1e-04.npz"
+    }
+  ],
+  "total_worker_seconds": 497.7758150000009,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0"
+  },
+  "blas": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}
