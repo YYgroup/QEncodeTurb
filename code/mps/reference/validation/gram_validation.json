@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "relative_difference_vs_lapack_svd": 5.127329925684827e-14,
+  "actual_error": 0.009991430142730795,
+  "certified_error": 0.009991430142730807,
+  "seconds": 95.55316270000185,
+  "methods": [
+    "LAPACK SVD",
+    "LAPACK SVD",
+    "LAPACK SVD",
+    "Left Gram eigenspace and orthogonal projection",
+    "LAPACK SVD",
+    "LAPACK SVD",
+    "LAPACK SVD"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "original_full_reconstruction_relative_error": 5.472982797356301e-15,
+  "original_truncated_relative_error": 0.8680970357216202,
+  "adapter_vs_original_truncated_relative_difference": 1.801399761898743e-14,
+  "marker_original_reconstruction_relative_error": 9.025194414808e-16,
+  "maximum_relative_spectrum_difference": 8.947755413788302e-16,
+  "maximum_entropy_difference_bits": 8.881784197001252e-16,
+  "original_memComp_full": 1.0,
+  "original_memComp_truncated": 0.109375,
+  "original_seconds": 5.077520132064819,
+  "passed": true
+}
