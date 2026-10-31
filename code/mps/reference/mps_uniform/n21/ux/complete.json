@@ -1,0 +1,234 @@
+{
+  "n": 21,
+  "grid": 128,
+  "component": "ux",
+  "local_dimension": 8,
+  "sites": 7,
+  "encoding": "Gourianov 2022 octal scale order, coarse to fine, omega=x_bit+2*y_bit+4*z_bit",
+  "adapter_sha256": "24790c20c76e028bddd9f156b07086caccb143d8767794e18d6170b8c97c7dd0",
+  "input_sha256": "f28fe25441e0180c87f267e9a5ba480d66780b28544e1e2fb42dda8f0f199579",
+  "spectrum_seconds": null,
+  "spectrum_time_note": "null denotes reused survey spectra",
+  "norm_squared": 62455083.10412933,
+  "spectra": [
+    {
+      "cut": 1,
+      "entropy_bits": 2.999351136834189,
+      "norm_squared_from_spectrum": 62455083.10412935,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 4.440892098500626e-16,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    },
+    {
+      "cut": 2,
+      "entropy_bits": 5.962784336805623,
+      "norm_squared_from_spectrum": 62455083.10412933,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 0.0,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 3,
+      "entropy_bits": 7.932915442375977,
+      "norm_squared_from_spectrum": 62455083.104129285,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 6.661338147750939e-16,
+      "ranks_by_epsilon": {
+        "0.01": 512,
+        "0.001": 512,
+        "0.0001": 512
+      }
+    },
+    {
+      "cut": 4,
+      "entropy_bits": 6.4510437565184,
+      "norm_squared_from_spectrum": 62455083.10412934,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 2.220446049250313e-16,
+      "ranks_by_epsilon": {
+        "0.01": 511,
+        "0.001": 512,
+        "0.0001": 512
+      }
+    },
+    {
+      "cut": 5,
+      "entropy_bits": 3.9446873151358064,
+      "norm_squared_from_spectrum": 62455083.10412931,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 3.3306690738754696e-16,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 6,
+      "entropy_bits": 1.7611252580003691,
+      "norm_squared_from_spectrum": 62455083.10412935,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 4.440892098500626e-16,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    }
+  ],
+  "approximations": [
+    {
+      "uniform_cap": 512,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        512,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 2629760,
+      "gauge_reduced_real_parameters": 2097152,
+      "epsilon": 0.01,
+      "actual_relative_l2_error": 6.397884564891811e-15,
+      "chi_max": 512,
+      "chi_schmidt_lower_bound": 512,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 2097152,
+      "stored_parameter_ratio_to_dense": 1.25396728515625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 21038080,
+      "construction_seconds": 0.6381147000065539,
+      "reconstruction_seconds": 0.054722100001526996,
+      "save_seconds": 0.030467100004898384,
+      "construction_baseline_rss_bytes": 77582336,
+      "construction_peak_rss_bytes": 175349760,
+      "construction_incremental_peak_rss_bytes": 97767424,
+      "file": "mps_eps_1e-02.npz"
+    },
+    {
+      "uniform_cap": 512,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        512,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 2629760,
+      "gauge_reduced_real_parameters": 2097152,
+      "epsilon": 0.001,
+      "actual_relative_l2_error": 6.397884564891811e-15,
+      "chi_max": 512,
+      "chi_schmidt_lower_bound": 512,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 2097152,
+      "stored_parameter_ratio_to_dense": 1.25396728515625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 21038080,
+      "construction_seconds": 0.5818875000113621,
+      "reconstruction_seconds": 0.05391709998366423,
+      "save_seconds": 0.03357950001372956,
+      "construction_baseline_rss_bytes": 167546880,
+      "construction_peak_rss_bytes": 236392448,
+      "construction_incremental_peak_rss_bytes": 68845568,
+      "file": "mps_eps_1e-03.npz"
+    },
+    {
+      "uniform_cap": 512,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        512,
+        512,
+        64,
+        8
+      ],
+      "stored_real_parameters": 2629760,
+      "gauge_reduced_real_parameters": 2097152,
+      "epsilon": 0.0001,
+      "actual_relative_l2_error": 6.397884564891811e-15,
+      "chi_max": 512,
+      "chi_schmidt_lower_bound": 512,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 2097152,
+      "stored_parameter_ratio_to_dense": 1.25396728515625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 21038080,
+      "construction_seconds": 0.6189734000072349,
+      "reconstruction_seconds": 0.055605200002901256,
+      "save_seconds": 0.0378086999990046,
+      "construction_baseline_rss_bytes": 204750848,
+      "construction_peak_rss_bytes": 278228992,
+      "construction_incremental_peak_rss_bytes": 73478144,
+      "file": "mps_eps_1e-04.npz"
+    }
+  ],
+  "total_worker_seconds": 2.2618700999883004,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0"
+  },
+  "blas": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}

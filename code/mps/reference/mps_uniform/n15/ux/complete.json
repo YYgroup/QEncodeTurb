@@ -1,0 +1,198 @@
+{
+  "n": 15,
+  "grid": 32,
+  "component": "ux",
+  "local_dimension": 8,
+  "sites": 5,
+  "encoding": "Gourianov 2022 octal scale order, coarse to fine, omega=x_bit+2*y_bit+4*z_bit",
+  "adapter_sha256": "24790c20c76e028bddd9f156b07086caccb143d8767794e18d6170b8c97c7dd0",
+  "input_sha256": "8fc7347e6698afba5d96d0fa95ab0051d5d93e771215097b4333aeea501a3e27",
+  "spectrum_seconds": null,
+  "spectrum_time_note": "null denotes reused survey spectra",
+  "norm_squared": 216121.50557866276,
+  "spectra": [
+    {
+      "cut": 1,
+      "entropy_bits": 2.997256614921323,
+      "norm_squared_from_spectrum": 216121.50557866273,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 1.1102230246251565e-16,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    },
+    {
+      "cut": 2,
+      "entropy_bits": 5.869729613451042,
+      "norm_squared_from_spectrum": 216121.5055786628,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 2.220446049250313e-16,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 3,
+      "entropy_bits": 5.7329770567075435,
+      "norm_squared_from_spectrum": 216121.5055786628,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 2.220446049250313e-16,
+      "ranks_by_epsilon": {
+        "0.01": 64,
+        "0.001": 64,
+        "0.0001": 64
+      }
+    },
+    {
+      "cut": 4,
+      "entropy_bits": 2.8848774992169255,
+      "norm_squared_from_spectrum": 216121.50557866276,
+      "method": "Previously computed direct LAPACK spectra; see survey.py",
+      "relative_norm_squared_residual": 0.0,
+      "ranks_by_epsilon": {
+        "0.01": 8,
+        "0.001": 8,
+        "0.0001": 8
+      }
+    }
+  ],
+  "approximations": [
+    {
+      "uniform_cap": 64,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        64,
+        8
+      ],
+      "stored_real_parameters": 41088,
+      "gauge_reduced_real_parameters": 32768,
+      "epsilon": 0.01,
+      "actual_relative_l2_error": 3.647100103553606e-15,
+      "chi_max": 64,
+      "chi_schmidt_lower_bound": 64,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 32768,
+      "stored_parameter_ratio_to_dense": 1.25390625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 328704,
+      "construction_seconds": 0.012297100009163842,
+      "reconstruction_seconds": 0.000598000013269484,
+      "save_seconds": 0.006690199981676415,
+      "construction_baseline_rss_bytes": 61652992,
+      "construction_peak_rss_bytes": 64098304,
+      "construction_incremental_peak_rss_bytes": 2445312,
+      "file": "mps_eps_1e-02.npz"
+    },
+    {
+      "uniform_cap": 64,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        64,
+        8
+      ],
+      "stored_real_parameters": 41088,
+      "gauge_reduced_real_parameters": 32768,
+      "epsilon": 0.001,
+      "actual_relative_l2_error": 3.647100103553606e-15,
+      "chi_max": 64,
+      "chi_schmidt_lower_bound": 64,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 32768,
+      "stored_parameter_ratio_to_dense": 1.25390625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 328704,
+      "construction_seconds": 0.011690200015436858,
+      "reconstruction_seconds": 0.0006881000008434057,
+      "save_seconds": 0.001068799989297986,
+      "construction_baseline_rss_bytes": 63987712,
+      "construction_peak_rss_bytes": 65179648,
+      "construction_incremental_peak_rss_bytes": 1191936,
+      "file": "mps_eps_1e-03.npz"
+    },
+    {
+      "uniform_cap": 64,
+      "schmidt_tail_sufficient_error_bound": 0.0,
+      "discarded_squared_norms": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "certified_relative_error": 0.0,
+      "ranks": [
+        8,
+        64,
+        64,
+        8
+      ],
+      "stored_real_parameters": 41088,
+      "gauge_reduced_real_parameters": 32768,
+      "epsilon": 0.0001,
+      "actual_relative_l2_error": 3.647100103553606e-15,
+      "chi_max": 64,
+      "chi_schmidt_lower_bound": 64,
+      "chi_excess_over_lower_bound": 0,
+      "dense_real_parameters": 32768,
+      "stored_parameter_ratio_to_dense": 1.25390625,
+      "gauge_reduced_parameter_ratio_to_dense": 1.0,
+      "mps_core_bytes": 328704,
+      "construction_seconds": 0.0108155999914743,
+      "reconstruction_seconds": 0.0004292000085115433,
+      "save_seconds": 0.0010999999940395355,
+      "construction_baseline_rss_bytes": 64528384,
+      "construction_peak_rss_bytes": 64528384,
+      "construction_incremental_peak_rss_bytes": 0,
+      "file": "mps_eps_1e-04.npz"
+    }
+  ],
+  "total_worker_seconds": 0.10865750000812113,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0"
+  },
+  "blas": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 8,
+      "prefix": "libscipy_openblas",
+      "filepath": "C:\\Users\\admin\\anaconda3\\envs\\qiskit\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll",
+      "version": "0.3.28",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ]
+}
