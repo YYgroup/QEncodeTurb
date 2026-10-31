@@ -1,0 +1,73 @@
+% Suggested SI definitions. Section/equation numbers follow the manuscript.
+\begin{equation}
+  N=2^L,\qquad n=3L,\qquad
+  \Gamma_\ell=\min(8^\ell,8^{L-\ell}),\qquad
+  \chi_{\max}=8^{\lfloor L/2\rfloor}.
+\end{equation}
+
+\begin{equation}
+  \mathcal{E}_q
+  =\frac{\|u_q-\widetilde{u}_q\|_2}{\|u_q\|_2},
+  \qquad
+  \mathcal{E}_{\max}=\max_{q\in\{x,y,z\}}\mathcal{E}_q.
+\end{equation}
+
+\begin{equation}
+  p_{\ell j}^{(q)}
+  =\frac{\bigl(\sigma_{\ell j}^{(q)}\bigr)^2}{\|u_q\|_2^2},
+  \qquad
+  S_\ell^{(q)}
+  =-\sum_j p_{\ell j}^{(q)}\log_2p_{\ell j}^{(q)}.
+\end{equation}
+
+\begin{equation}
+  r_{\ell q}(\epsilon)
+  =\min\left\{r:
+    \sum_{j>r}\bigl(\sigma_{\ell j}^{(q)}\bigr)^2
+    \leq\epsilon^2\|u_q\|_2^2
+  \right\},
+  \qquad
+  \chi_{\mathrm{lb}}(\epsilon)
+  =\max_{\ell,q}r_{\ell q}(\epsilon).
+\end{equation}
+
+\begin{equation}
+  \mathcal{E}_{\mathrm{lb}}(\chi)
+  =\max_{\ell,q}
+    \left[
+      \frac{\sum_{j>\chi}\bigl(\sigma_{\ell j}^{(q)}\bigr)^2}
+           {\|u_q\|_2^2}
+    \right]^{1/2}.
+\end{equation}
+
+% Joint-component single-cut convention used by the original MATLAB analysis.
+\begin{equation}
+  \mathcal{E}_{\mathrm{joint},\ell}^{\,2}(r)
+  =\frac{
+    \sum_q\sum_{j>r}\bigl(\sigma_{\ell j}^{(q)}\bigr)^2
+  }{\sum_q\|u_q\|_2^2}.
+\end{equation}
+
+\begin{equation}
+  P_{\mathrm{store}}
+  =\sum_{q\in\{x,y,z\}}\sum_{\ell=1}^{L}
+       8r_{\ell-1}^{(q)}r_\ell^{(q)},
+  \qquad r_0^{(q)}=r_L^{(q)}=1.
+\end{equation}
+
+\begin{equation}
+  P_{\mathrm{NVPS}}
+  =P_{\mathrm{store}}
+    -\sum_{q\in\{x,y,z\}}\sum_{\ell=1}^{L-1}
+       \bigl(r_\ell^{(q)}\bigr)^2.
+\end{equation}
+
+% Description parameters of the two component circuits, not full simulation cost.
+% R is the amplitude-ansatz locality radius and is distinct from MPS ranks.
+\begin{equation}
+  P_{\mathrm{gen}}
+  =A_{\mathrm{act}}+n(n+1)+1,
+  \qquad
+  A_{\mathrm{act}}
+  \leq n+\sum_{j=1}^{n}\min(R,j-1).
+\end{equation}
