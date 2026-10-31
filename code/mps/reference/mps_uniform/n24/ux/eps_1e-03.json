@@ -1,0 +1,41 @@
+{
+  "uniform_cap": 3924,
+  "schmidt_tail_sufficient_error_bound": 0.000997715239917056,
+  "discarded_squared_norms": [
+    0.0,
+    0.0,
+    0.0,
+    821.1129951934092,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "certified_relative_error": 0.0009977152399167448,
+  "ranks": [
+    8,
+    64,
+    512,
+    3924,
+    512,
+    64,
+    8
+  ],
+  "stored_real_parameters": 32678016,
+  "gauge_reduced_real_parameters": 16747632,
+  "epsilon": 0.001,
+  "actual_relative_l2_error": 0.0009977152399167435,
+  "chi_max": 3924,
+  "chi_schmidt_lower_bound": 3924,
+  "chi_excess_over_lower_bound": 0,
+  "dense_real_parameters": 16777216,
+  "stored_parameter_ratio_to_dense": 1.9477615356445312,
+  "gauge_reduced_parameter_ratio_to_dense": 0.9982366561889648,
+  "mps_core_bytes": 261424128,
+  "construction_seconds": 28.75210660000448,
+  "reconstruction_seconds": 1.147103800001787,
+  "save_seconds": 0.5848533000098541,
+  "construction_baseline_rss_bytes": 562569216,
+  "construction_peak_rss_bytes": 1299910656,
+  "construction_incremental_peak_rss_bytes": 737341440,
+  "file": "mps_eps_1e-03.npz"
+}
