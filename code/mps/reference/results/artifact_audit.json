@@ -1,0 +1,277 @@
+{
+  "passed": true,
+  "checked_approximations": 45,
+  "verified_original_source_files": 197,
+  "checks": [
+    {
+      "n": 15,
+      "component": "ux",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "ux",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "ux",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uy",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uy",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uy",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uz",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uz",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 15,
+      "component": "uz",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "ux",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "ux",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "ux",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uy",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uy",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uy",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uz",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uz",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 18,
+      "component": "uz",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "ux",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "ux",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "ux",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uy",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uy",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uy",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uz",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uz",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 21,
+      "component": "uz",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "ux",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "ux",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "ux",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uy",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uy",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uy",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uz",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uz",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 24,
+      "component": "uz",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "ux",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "ux",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "ux",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uy",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uy",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uy",
+      "epsilon": 0.0001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uz",
+      "epsilon": 0.01,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uz",
+      "epsilon": 0.001,
+      "passed": true
+    },
+    {
+      "n": 27,
+      "component": "uz",
+      "epsilon": 0.0001,
+      "passed": true
+    }
+  ]
+}
