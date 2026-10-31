@@ -255,65 +255,12 @@ def _add_standard_light(plotter):
     plotter.add_light(light)
 
 
-# def render_vortex_isosurface(flow, vorticity):
-#     """Render the vorticity isosurface colored by helicity."""
-#     import pyvista as pv
-
-#     N = flow.N
-#     spacing = tuple(2 * np.pi / (N - 1) for _ in range(3))
-#     grid = pv.ImageData(dimensions=(N, N, N), spacing=spacing, origin=(0, 0, 0))
-#     grid.point_data["vor"] = vorticity.magnitude.ravel(order="F")
-#     grid.point_data["helicity"] = vorticity.helicity.ravel(order="F")
-
-#     plotter = pv.Plotter(notebook=False, off_screen=True)
-#     contours = grid.contour(isosurfaces=[150], scalars="vor")
-#     if hasattr(contours, "smooth"):
-#         contours = contours.smooth(n_iter=100, relaxation_factor=0.1)
-#     bounds = contours.bounds
-#     plotter.add_mesh(
-#         contours,
-#         scalars="helicity",
-#         cmap=cmap_BuRd,
-#         clim=[-1e3, 1e3],
-#         opacity=0.7,
-#     )
-#     plotter.add_mesh(
-#         pv.Box(bounds=bounds),
-#         color="white",
-#         style="wireframe",
-#         line_width=10,
-#     )
-#     plotter.remove_scalar_bar()
-
-#     planes = [
-#         ((2 * np.pi, (bounds[2] + bounds[3]) / 2, (bounds[4] + bounds[5]) / 2), (1, 0, 0)),
-#         (((bounds[0] + bounds[1]) / 2, 0, (bounds[4] + bounds[5]) / 2), (0, -1, 0)),
-#         (((bounds[0] + bounds[1]) / 2, (bounds[2] + bounds[3]) / 2, 0), (0, 0, -1)),
-#     ]
-#     size = (
-#         bounds[1] - bounds[0],
-#         bounds[3] - bounds[2],
-#         bounds[5] - bounds[4],
-#     )
-#     for position, normal in planes:
-#         _add_background_plane(plotter, position, normal, size)
-
-#     plotter.enable_anti_aliasing()
-#     _add_standard_light(plotter)
-#     plotter.camera.azimuth = 70
-#     plotter.camera.elevation = -15
-#     plotter.disable_parallel_projection()
-#     plotter.show(
-#         screenshot="figures/iso-vor_try.png",
-#         window_size=[3000, 3000],
-#     )
-
 def render_vortex_isosurface(
     flow,
     vorticity,
-    iso_value=22.0,
-    helicity_limit=70.0,
-    output_path="figures/iso-vor_nq=15.png",
+    iso_value,
+    helicity_limit,
+    output_path,
 ):
     """Render the vorticity isosurface colored by helicity."""
     import pyvista as pv
@@ -342,6 +289,10 @@ def render_vortex_isosurface(
         cmap=cmap_BuRd,
         clim=[-helicity_limit, helicity_limit],
         opacity=0.7,
+        smooth_shading=True,
+        interpolate_before_map=True,
+        n_colors=1024,
+        show_edges=False,
     )
     plotter.add_mesh(
         pv.Box(bounds=bounds),
@@ -377,7 +328,12 @@ def render_vortex_isosurface(
     return output_path
 
 
-def render_spin_isosurface(flow, spin_fields, vorticity):
+def render_spin_isosurface(
+    flow, 
+    spin_fields, 
+    vorticity,
+    output_path,
+    ):
     """Render the s1 isosurface colored by vorticity magnitude."""
     import pyvista as pv
 
@@ -388,7 +344,7 @@ def render_spin_isosurface(flow, spin_fields, vorticity):
     grid.point_data["vor"] = vorticity.magnitude.ravel(order="F")
 
     plotter = pv.Plotter(notebook=False, off_screen=True)
-    contours = grid.contour(isosurfaces=[-0.8], scalars="s")
+    contours = grid.contour(isosurfaces=[0.3], scalars="s")
     if hasattr(contours, "smooth"):
         contours = contours.smooth(n_iter=100, relaxation_factor=0.1)
     bounds = contours.bounds
@@ -396,7 +352,7 @@ def render_spin_isosurface(flow, spin_fields, vorticity):
         contours,
         scalars="vor",
         cmap="cividis",
-        clim=[0, 350],
+        clim=[0, 500],
         opacity=0.7,
     )
     plotter.add_mesh(
@@ -425,7 +381,7 @@ def render_spin_isosurface(flow, spin_fields, vorticity):
     plotter.camera.elevation = -15
     plotter.disable_parallel_projection()
     plotter.show(
-        screenshot="figures/iso-s_nq=30.png",
+        screenshot=str(output_path),
         window_size=[3000, 3000],
     )
 
@@ -458,21 +414,21 @@ def render_spinor_spectral_volume(flow):
     """Render the normalized spin-up spectral probability."""
     data = np.abs(np.fft.fftshift(flow.psi1_spec)) ** 2
     data = data / np.amax(data)
-    _render_spectral_volume(data, [1e-6, 0.8], "figures/psi1_vol.png")
+    _render_spectral_volume(data, [1e-6, 1], "figures/psi1_vol.png")
 
 
 def render_density_spectral_volume(flow):
     """Render the normalized density spectrum."""
     data = np.abs(np.fft.fftshift(np.fft.fftn(flow.rho))) ** 2
     data = data / np.unique(data)[-2]
-    _render_spectral_volume(data, [1e-6, 0.3], "figures/psi1_vol.png")
+    _render_spectral_volume(data, [1e-6, 1], "figures/psi1_vol.png")
 
 
 def render_velocity_spectral_volume(flow):
     """Render the normalized x-velocity spectrum."""
     data = np.abs(np.fft.fftshift(np.fft.fftn(flow.ux)) / flow.N**3) ** 2
     data = data / np.unique(data)[-1]
-    _render_spectral_volume(data, [1e-6, 0.1], "figures/psi1_vol.png")
+    _render_spectral_volume(data, [1e-6, 1], "figures/psi1_vol.png")
 
 
 def _render_physical_volume(data, cmap, clim, opacity, screenshot):
@@ -505,7 +461,7 @@ def _render_physical_volume(data, cmap, clim, opacity, screenshot):
     ]
     for position, normal in planes:
         _add_background_plane(plotter, position, normal, size)
-    plotter.add_mesh(grid.outline(), color="grey", line_width=5)
+    plotter.add_mesh(grid.outline(), color="grey", line_width=5, render_lines_as_tubes=True)
     _add_standard_light(plotter)
     plotter.camera.azimuth = 70
     plotter.camera.elevation = -15
@@ -518,9 +474,9 @@ def render_vorticity_volume(vorticity):
     _render_physical_volume(
         vorticity.magnitude,
         "Blues",
-        [0, 500],
+        [0, 10000],
         "linear",
-        "figures/vor_volume_render_nq=27.png",
+        "figures/vor_volume_render_nq=30.png",
     )
 
 
@@ -529,7 +485,7 @@ def render_density_volume(flow):
     _render_physical_volume(
         flow.rho,
         "Reds",
-        [0, 1e-16],
+        [0, 5e-18],
         "sigmoid",
-        "figures/rho_volume_render_nq=27.png",
+        "figures/rho_volume_render_nq=30.png",
     )

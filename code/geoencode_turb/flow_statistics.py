@@ -6,6 +6,10 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 import gc
+import math
+import warnings
+from pathlib import Path
+import json
 
 from .config import WorkflowConfig
 from .flow_reconstruction import (
@@ -281,21 +285,6 @@ def compute_RQ(
     return R, Q
 
 
-# def compute_jointpdf(data1, data2, bin_num):
-#     """Compute a two-dimensional probability density function."""
-#     binsize_1 = (np.max(data1) - np.min(data1)) / bin_num
-#     binsize_2 = (np.max(data2) - np.min(data2)) / bin_num
-#     counts, x_edges, y_edges = np.histogram2d(
-#         data1.flatten(),
-#         data2.flatten(),
-#         bins=bin_num,
-#     )
-#     pdf = counts / (binsize_1 * binsize_2 * data1.size)
-#     val1 = x_edges[:-1] + binsize_1 / 2
-#     val2 = y_edges[:-1] + binsize_2 / 2
-#     return val1, val2, pdf
-
-
 def compute_jointpdf(data1, data2, bin_num):
     """
     Compute a two-dimensional probability density function using a robust
@@ -404,91 +393,338 @@ def calculate_structure_function(
     n_samples=1_000_000,
     n_bins=50,
 ):
-    """Estimate a longitudinal structure function by Monte Carlo sampling.
+    """Estimate an absolute longitudinal moment using physical distances.
 
-    Parameters
-    ----------
-    ux, uy, uz : numpy.ndarray
-        Three velocity components with shape (Nx, Ny, Nz). Unit grid spacing is
-        assumed in every direction, as in the original notebook.
-    p : int
-        Structure-function order.
-    n_samples : int, optional
-        Number of randomly sampled point pairs.
-    n_bins : int, optional
-        Number of separation-distance bins.
-
-    Returns
-    -------
-    r_centers, Sp : numpy.ndarray
-        Separation-bin centers and the corresponding structure function.
+    Each box side has length 2*pi. Sampling retains the original nonperiodic
+    point-pair definition. Empty bins contain NaN.
     """
     if not (ux.shape == uy.shape == uz.shape):
         raise ValueError("ux, uy, and uz must have identical shapes.")
+
     if p <= 0:
         raise ValueError("The structure-function order p must be positive.")
 
     Nx, Ny, Nz = ux.shape
-    print(f"Grid dimensions: {Nx}x{Ny}x{Nz}")
+
+    box_length = 2 * np.pi
+    spacing = box_length / np.array([Nx, Ny, Nz], dtype=float)
+    reference_spacing = float(spacing.min())
+    spacing_ratio = spacing / reference_spacing
+    uniform_spacing = Nx == Ny == Nz
+
     print(
         f"Computing the order-{p} structure function with "
         f"{n_samples:,} sampled point pairs..."
     )
 
-    i1 = np.random.randint(0, Nx, size=n_samples)
-    j1 = np.random.randint(0, Ny, size=n_samples)
-    k1 = np.random.randint(0, Nz, size=n_samples)
-    i2 = np.random.randint(0, Nx, size=n_samples)
-    j2 = np.random.randint(0, Ny, size=n_samples)
-    k2 = np.random.randint(0, Nz, size=n_samples)
+    batch_size = 200_000
 
-    dr_x = i2.astype(float) - i1.astype(float)
-    dr_y = j2.astype(float) - j1.astype(float)
-    dr_z = k2.astype(float) - k1.astype(float)
-    r = np.sqrt(dr_x**2 + dr_y**2 + dr_z**2)
-
-    # Remove zero-separation pairs.
-    valid_mask = r > 0
-    if not np.any(valid_mask):
-        print("Warning: all sampled point pairs have zero separation.")
-        return np.array([]).reshape(-1, 1), np.array([]).reshape(-1, 1)
-
-    r = r[valid_mask]
-    dr_x, dr_y, dr_z = dr_x[valid_mask], dr_y[valid_mask], dr_z[valid_mask]
-    i1, j1, k1 = i1[valid_mask], j1[valid_mask], k1[valid_mask]
-    i2, j2, k2 = i2[valid_mask], j2[valid_mask], k2[valid_mask]
-
-    u1 = np.array([ux[i1, j1, k1], uy[i1, j1, k1], uz[i1, j1, k1]])
-    u2 = np.array([ux[i2, j2, k2], uy[i2, j2, k2], uz[i2, j2, k2]])
-    du = u2 - u1
-
-    du_long = np.einsum(
-        "ij,ij->j",
-        du,
-        np.array([dr_x, dr_y, dr_z]),
-    ) / r
-    sp_values = np.abs(du_long) ** p
-
-    max_r = np.sqrt(Nx**2 + Ny**2 + Nz**2)
-    r_bins = np.logspace(np.log10(1.0), np.log10(max_r), n_bins + 1)
-    r_centers = 0.5 * (r_bins[:-1] + r_bins[1:])
-    bin_indices = np.digitize(r, r_bins) - 1
-    valid_bin_mask = (bin_indices >= 0) & (bin_indices < n_bins)
-
-    bin_sums = np.bincount(
-        bin_indices[valid_bin_mask],
-        weights=sp_values[valid_bin_mask],
-        minlength=n_bins,
-    )
-    bin_counts = np.bincount(
-        bin_indices[valid_bin_mask],
-        minlength=n_bins,
+    coordinate_dtype = np.min_scalar_type(max(Nx, Ny, Nz) - 1)
+    coordinates = np.empty(
+        (6, n_samples),
+        dtype=coordinate_dtype,
     )
 
-    Sp = np.zeros_like(r_centers)
-    non_zero_counts = bin_counts > 0
-    Sp[non_zero_counts] = bin_sums[non_zero_counts] / bin_counts[non_zero_counts]
+    # Preserve the original coordinate draw order and random-number dtype.
+    for axis, size in enumerate((Nx, Ny, Nz, Nx, Ny, Nz)):
+        for start in range(0, n_samples, batch_size):
+            stop = min(start + batch_size, n_samples)
+
+            coordinates[axis, start:stop] = np.random.randint(
+                0,
+                size,
+                size=stop - start,
+            )
+
+    # Internal distances use reference-grid units.
+    if uniform_spacing:
+        max_r = np.sqrt(Nx**2 + Ny**2 + Nz**2)
+    else:
+        max_r = np.linalg.norm(
+            np.array([Nx, Ny, Nz]) * spacing_ratio
+        )
+
+    r_bins = np.logspace(
+        np.log10(1.0),
+        np.log10(max_r),
+        n_bins + 1,
+    )
+
+    # Convert returned distances to physical length.
+    r_centers = (
+        0.5
+        * (r_bins[:-1] + r_bins[1:])
+        * reference_spacing
+    )
+
+    bin_sums = np.zeros(n_bins, dtype=np.float64)
+    bin_counts = np.zeros(n_bins, dtype=np.int64)
+
+    max_squared_distance = (
+        (Nx - 1)**2
+        + (Ny - 1)**2
+        + (Nz - 1)**2
+    )
+    use_lookup = (
+        uniform_spacing
+        and max_squared_distance <= 8_000_000
+        and n_samples > max_squared_distance
+    )
+
+    if use_lookup:
+        radius_lookup = np.sqrt(
+            np.arange(
+                max_squared_distance + 1,
+                dtype=np.float64,
+            )
+        )
+
+        bin_lookup = np.searchsorted(
+            r_bins,
+            radius_lookup,
+            side="right",
+        ) - 1
+
+        bin_lookup = bin_lookup.astype(
+            np.min_scalar_type(-n_bins - 1)
+        )
+
+    velocity_dtype = np.result_type(
+        ux.dtype,
+        uy.dtype,
+        uz.dtype,
+    )
+    flat_velocities = None
+
+    if all(u.flags.c_contiguous for u in (ux, uy, uz)):
+        flat_velocities = (
+            ux.reshape(-1),
+            uy.reshape(-1),
+            uz.reshape(-1),
+        )
+
+    # Preserve the original per-bin floating-point addition order.
+    sum_indices = np.empty(
+        n_bins + batch_size,
+        dtype=np.intp,
+    )
+    sum_weights = np.empty(
+        n_bins + batch_size,
+        dtype=np.float64,
+    )
+    sum_indices[:n_bins] = np.arange(n_bins)
+
+    for start in range(0, n_samples, batch_size):
+        stop = min(start + batch_size, n_samples)
+
+        i1, j1, k1, i2, j2, k2 = coordinates[:, start:stop]
+
+        if use_lookup:
+            dr_x = i2.astype(np.int32) - i1
+            dr_y = j2.astype(np.int32) - j1
+            dr_z = k2.astype(np.int32) - k1
+
+            squared_index = dr_x**2 + dr_y**2 + dr_z**2
+
+            r = radius_lookup[squared_index]
+            bin_indices = bin_lookup[squared_index]
+        else:
+            dr_x = (
+                (i2.astype(float) - i1.astype(float))
+                * spacing_ratio[0]
+            )
+            dr_y = (
+                (j2.astype(float) - j1.astype(float))
+                * spacing_ratio[1]
+            )
+            dr_z = (
+                (k2.astype(float) - k1.astype(float))
+                * spacing_ratio[2]
+            )
+
+            r = np.sqrt(dr_x**2 + dr_y**2 + dr_z**2)
+
+            bin_indices = np.searchsorted(
+                r_bins,
+                r,
+                side="right",
+            ) - 1
+
+        valid = (
+            (r > 0)
+            & (bin_indices >= 0)
+            & (bin_indices < n_bins)
+        )
+
+        if not np.any(valid):
+            continue
+
+        if not np.all(valid):
+            i1, j1, k1 = i1[valid], j1[valid], k1[valid]
+            i2, j2, k2 = i2[valid], j2[valid], k2[valid]
+
+            dr_x = dr_x[valid]
+            dr_y = dr_y[valid]
+            dr_z = dr_z[valid]
+
+            r = r[valid]
+            bin_indices = bin_indices[valid]
+
+        if flat_velocities is not None:
+            first = i1.astype(np.intp)
+            first *= Ny
+            first += j1
+            first *= Nz
+            first += k1
+
+            second = i2.astype(np.intp)
+            second *= Ny
+            second += j2
+            second *= Nz
+            second += k2
+
+            du = np.empty(
+                (3, len(r)),
+                dtype=velocity_dtype,
+            )
+
+            for axis, velocity in enumerate(flat_velocities):
+                np.subtract(
+                    velocity[second],
+                    velocity[first],
+                    out=du[axis],
+                    dtype=velocity_dtype,
+                )
+        else:
+            u1 = np.array(
+                [
+                    ux[i1, j1, k1],
+                    uy[i1, j1, k1],
+                    uz[i1, j1, k1],
+                ]
+            )
+            u2 = np.array(
+                [
+                    ux[i2, j2, k2],
+                    uy[i2, j2, k2],
+                    uz[i2, j2, k2],
+                ]
+            )
+
+            du = u2 - u1
+
+        # A common length factor cancels in the longitudinal projection.
+        du_long = np.einsum(
+            "ij,ij->j",
+            du,
+            np.array([dr_x, dr_y, dr_z], dtype=float),
+        ) / r
+
+        sp_values = np.abs(du_long) ** p
+        number = len(sp_values)
+
+        sum_weights[:n_bins] = bin_sums
+        sum_weights[n_bins:n_bins + number] = sp_values
+        sum_indices[n_bins:n_bins + number] = bin_indices
+
+        bin_sums = np.bincount(
+            sum_indices[:n_bins + number],
+            weights=sum_weights[:n_bins + number],
+            minlength=n_bins,
+        )
+
+        bin_counts += np.bincount(
+            bin_indices.astype(np.intp, copy=False),
+            minlength=n_bins,
+        )
+
+    # Missing statistics must not appear as a zero structure function.
+    Sp = np.full_like(r_centers, np.nan)
+    populated = bin_counts > 0
+
+    Sp[populated] = (
+        bin_sums[populated]
+        / bin_counts[populated]
+    )
+
     return r_centers.reshape(-1), Sp.reshape(-1)
+
+
+def run_structure_functions(flow, config=None):
+    """Compute and export order-2 through order-5 structure functions."""
+    config = WorkflowConfig() if config is None else config
+
+    r, s2 = calculate_structure_function(
+        flow.ux,
+        flow.uy,
+        flow.uz,
+        2,
+        n_samples=100_000_000,
+        n_bins=100,
+    )
+    r, s3 = calculate_structure_function(
+        flow.ux,
+        flow.uy,
+        flow.uz,
+        3,
+        n_samples=100_000_000,
+        n_bins=100,
+    )
+    r, s4 = calculate_structure_function(
+        flow.ux,
+        flow.uy,
+        flow.uz,
+        4,
+        n_samples=100_000_000,
+        n_bins=100,
+    )
+    r, s5 = calculate_structure_function(
+        flow.ux,
+        flow.uy,
+        flow.uz,
+        5,
+        n_samples=100_000_000,
+        n_bins=100,
+    )
+
+    header_names = ["r", "s2", "s3", "s4", "s5"]
+    data_dict = dict(zip(header_names, [r, s2, s3, s4, s5]))
+
+    df = pd.DataFrame(data_dict)
+
+    df = df.dropna(
+        subset=["r", "s2", "s3", "s4", "s5"],
+    ).reset_index(drop=True)
+
+    from scipy.ndimage import median_filter
+    from scipy.interpolate import make_smoothing_spline
+
+    smoothing_r = np.geomspace(0.01, 10, 87)
+    smoothing_lambda = 0.02
+    source_r = df["r"].to_numpy()
+    log_r = np.log(smoothing_r)
+    smoothed_df = pd.DataFrame({"r": smoothing_r})
+    for column in ["s2", "s3", "s4", "s5"]:
+        log_sp = np.interp(log_r, np.log(source_r), np.log(df[column].to_numpy()))
+        log_sp = median_filter(log_sp, size=15, mode="nearest")
+        spline = make_smoothing_spline(log_r, log_sp, lam=smoothing_lambda)
+        smoothed_df[column] = np.exp(spline(log_r))
+    df = smoothed_df
+
+    r = df["r"].to_numpy()
+    s2 = df["s2"].to_numpy()
+    s3 = df["s3"].to_numpy()
+    s4 = df["s4"].to_numpy()
+    s5 = df["s5"].to_numpy()
+
+    df.to_csv(
+        config.data_dir
+        / f"structure_functions_n={config.nx + config.ny + config.nz}.csv",
+        index=False,
+        lineterminator="\n",
+    )
+
+    return r, s2, s3, s4, s5
 
 
 def calculate_anisotropy_tensor(ux, uy, uz):
@@ -732,7 +968,7 @@ def export_spin_spectra(flow, config=None):
     k, Es2 = compute_Es(s2, flow.ik2, flow.N)
     k, Es3 = compute_Es(s3, flow.ik2, flow.N)
     pd.DataFrame({"k": k, "Es1": Es1, "Es2": Es2, "Es3": Es3}).to_csv(
-        config.data_dir / "turb_Es_nq=30.csv",
+        config.data_dir / f"turb_Es_nq={config.nx + config.ny + config.nz}.csv",
         index=False,
     )
     return (s1, s2, s3), (k, Es1, Es2, Es3)
@@ -793,11 +1029,11 @@ def export_velocity_vorticity_pdfs(flow, vorticity, config=None):
     val_vor, pdf_vor = compute_pdf(vor, 3 * flow.N**3, 150)
 
     pd.DataFrame({"vel": val_u / u_prime, "pdf": pdf_u}).to_csv(
-        config.data_dir / "turb_PDF_vel.csv",
+        config.data_dir / f"turb_PDF_vel_n={config.nx + config.ny + config.nz}.csv",
         index=False,
     )
     pd.DataFrame({"vor": val_vor / vor_prime, "pdf": pdf_vor}).to_csv(
-        config.data_dir / "turb_PDF_vor.csv",
+        config.data_dir / f"turb_PDF_vor_n={config.nx + config.ny + config.nz}.csv",
         index=False,
     )
     return {
@@ -855,54 +1091,14 @@ def compute_rq_statistics(flow, config=None):
     )
 
 
-def run_structure_functions(flow, config=None):
-    """Compute and export the original order-2 through order-5 functions."""
-    config = WorkflowConfig() if config is None else config
-    r, s2 = calculate_structure_function(
-        flow.ux,
-        flow.uy,
-        flow.uz,
-        2,
-        n_samples=1_000_000_000,
-        n_bins=50,
-    )
-    r, s3 = calculate_structure_function(
-        flow.ux,
-        flow.uy,
-        flow.uz,
-        3,
-        n_samples=1_000_000_000,
-        n_bins=50,
-    )
-    r, s4 = calculate_structure_function(
-        flow.ux,
-        flow.uy,
-        flow.uz,
-        4,
-        n_samples=1_000_000_000,
-        n_bins=50,
-    )
-    r, s5 = calculate_structure_function(
-        flow.ux,
-        flow.uy,
-        flow.uz,
-        5,
-        n_samples=1_000_000_000,
-        n_bins=50,
-    )
-
-    header_names = ["r", "s2", "s3", "s4", "s5"]
-    data_dict = dict(zip(header_names, [r, s2, s3, s4, s5]))
-    df = pd.DataFrame(data_dict)
-    df.to_csv(config.data_dir / "structure_functions.csv", index=False)
-    return r, s2, s3, s4, s5
-
-
-def report_anisotropy(flow):
+def report_anisotropy(flow, config=None):
     """Compute and print all six independent anisotropy components."""
+    config = WorkflowConfig() if config is None else config
+    config.ensure_output_directories()
+    
     components = calculate_anisotropy_tensor(flow.ux, flow.uy, flow.uz)
-    for component, value in components.items():
-        print(f"{component}: {value:.6f}")
+    output_path = config.data_dir / f"anisotropy_n={config.nx + config.ny + config.nz}.xlsx"
+    pd.DataFrame([components]).to_excel(output_path, index=False)
     return components
 
 
@@ -1050,3 +1246,142 @@ def compute_turbulence_scales(
         print(f"User-supplied Re_L (comparison only)    = {Re_L_input:.8e}")
 
     return result
+
+
+def compute_vartheta(
+    ux,
+    uy,
+    uz,
+    *,
+    box_length=2 * np.pi,
+    return_details=False,
+):
+    """
+    Compute the dimensionless dilatation measure
+
+        vartheta = <div(u)**2> / (<div(u)**2> + <|curl(u)|**2>).
+
+    Periodic second-order central differences are used.
+
+    Parameters
+    ----------
+    ux, uy, uz : real ndarray, shape (Nx, Ny, Nz)
+        Velocity components on a uniform periodic grid.
+    box_length : float or sequence of three floats
+        Physical box lengths. A scalar specifies the same length
+        in all three directions.
+    return_details : bool
+        If True, return a dictionary containing vartheta and
+        the two mean-square quantities. Otherwise return vartheta.
+
+    Returns
+    -------
+    float or dict
+        The dimensionless measure, optionally with its components.
+        Returns NaN when both mean-square quantities vanish.
+    """
+    fields = tuple(np.asarray(u) for u in (ux, uy, uz))
+    ux, uy, uz = fields
+    shape = ux.shape
+
+    if (
+        len(shape) != 3
+        or min(shape) < 3
+        or any(u.shape != shape for u in fields)
+    ):
+        raise ValueError(
+            "ux, uy, and uz must have the same three-dimensional "
+            "shape, with at least three points along each axis."
+        )
+
+    if any(
+        not np.issubdtype(u.dtype, np.number)
+        or np.iscomplexobj(u)
+        for u in fields
+    ):
+        raise ValueError("Velocity arrays must contain real numbers.")
+
+    lengths = np.broadcast_to(
+        np.asarray(box_length, dtype=np.float64), (3,)
+    )
+
+    if not np.isfinite(lengths).all() or np.any(lengths <= 0):
+        raise ValueError("Box lengths must be finite and positive.")
+
+    spacing = lengths / np.asarray(shape, dtype=np.float64)
+    nx = shape[0]
+
+    def derivative_slice(field, axis, i):
+        """Return one x-slice of a periodic central derivative."""
+        if axis == 0:
+            forward = np.asarray(
+                field[(i + 1) % nx], dtype=np.float64
+            )
+            backward = np.asarray(
+                field[(i - 1) % nx], dtype=np.float64
+            )
+        else:
+            plane = np.asarray(field[i], dtype=np.float64)
+            forward = np.roll(plane, -1, axis=axis - 1)
+            backward = np.roll(plane, 1, axis=axis - 1)
+
+        return (forward - backward) / (2.0 * spacing[axis])
+
+    sum_div2 = 0.0
+    sum_curl2 = 0.0
+
+    for i in range(nx):
+        if any(not np.isfinite(u[i]).all() for u in fields):
+            raise ValueError("Velocity contains NaN or infinity.")
+
+        # div(u) = dux/dx + duy/dy + duz/dz.
+        divergence = derivative_slice(ux, 0, i)
+        divergence += derivative_slice(uy, 1, i)
+        divergence += derivative_slice(uz, 2, i)
+
+        sum_div2 += float(
+            np.einsum("ij,ij->", divergence, divergence)
+        )
+        del divergence
+
+        # curl(u): compute and release one component at a time.
+        curl_terms = (
+            (uz, 1, uy, 2),  # omega_x = duz/dy - duy/dz
+            (ux, 2, uz, 0),  # omega_y = dux/dz - duz/dx
+            (uy, 0, ux, 1),  # omega_z = duy/dx - dux/dy
+        )
+
+        for field_a, axis_a, field_b, axis_b in curl_terms:
+            omega = derivative_slice(field_a, axis_a, i)
+            omega -= derivative_slice(field_b, axis_b, i)
+
+            sum_curl2 += float(
+                np.einsum("ij,ij->", omega, omega)
+            )
+            del omega
+
+    denominator = sum_div2 + sum_curl2
+
+    if not np.isfinite(denominator):
+        raise FloatingPointError(
+            "Nonfinite derivative statistics; check velocity magnitudes."
+        )
+
+    if denominator == 0.0:
+        warnings.warn(
+            "Both derivative measures vanish; vartheta is undefined.",
+            RuntimeWarning,
+        )
+        vartheta = np.nan
+    else:
+        vartheta = sum_div2 / denominator
+
+    if return_details:
+        n_points = ux.size
+        return {
+            "vartheta": float(vartheta),
+            "mean_divergence_squared": sum_div2 / n_points,
+            "mean_vorticity_squared": sum_curl2 / n_points,
+        }
+
+    return float(vartheta)

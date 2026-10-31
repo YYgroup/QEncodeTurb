@@ -118,7 +118,7 @@ def compute_Ek(ux, uy, uz, ik2, N):
     Ek = np.zeros(nek)
     k = np.linspace(1, nek, nek)
     for i in range(1, nek + 1):
-        Ek[i - 1] = k[i - 1] * np.sum(energy_spec[ik2 == i])
+        Ek[i - 1] = np.sum(energy_spec[ik2 == i])
     return k, Ek
 
 
@@ -143,7 +143,7 @@ def compute_Es(s, ik2, N):
     Es = np.zeros(nek)
     k = np.linspace(1, nek, nek)
     for i in range(1, nek + 1):
-        Es[i - 1] = k[i - 1] * np.sum(energy_spec[ik2 == i])
+        Es[i - 1] = np.sum(energy_spec[ik2 == i])
     return k, Es
 
 
@@ -174,6 +174,9 @@ def reconstruct_flow_field(encoding, config=None):
         ny,
         nz,
     ).reshape((2**nz, 2**ny, 2**nx)).T
+
+    psi1_spec *= np.sqrt(2.0 * config.component_ratio)
+    psi2_spec *= np.sqrt(2.0 * (1.0 - config.component_ratio))
 
     # Release the statevectors after their physical ordering has been restored.
     encoding.sta_vec_1_data = None
