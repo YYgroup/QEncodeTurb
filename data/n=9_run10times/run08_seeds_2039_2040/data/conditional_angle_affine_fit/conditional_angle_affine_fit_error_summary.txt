@@ -1,5 +1,0 @@
-K_j = SSE_j/[pi^2 sum_c omega_c]; sqrt(K_j)=weighted RMSE/pi.
-
-Gray ordering: K range=[0.000000e+00, 1.483982e-02], median=3.022322e-03, maximum at layer 19, global K=5.992641e-03, global sqrt(K)=7.741215e-02, informative-layer median=5.179921e-03, maximum out-of-range weight fraction=2.879409e-01.
-Binary ordering: K range=[3.287346e-22, 1.698538e-02], median=2.676032e-03, maximum at layer 17, global K=5.019581e-03, global sqrt(K)=7.084900e-02, informative-layer median=3.209084e-03, maximum out-of-range weight fraction=4.423927e-03.
-Global-K ratio (binary/Gray)=8.376241e-01.
